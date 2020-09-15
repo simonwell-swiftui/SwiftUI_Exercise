@@ -42,10 +42,10 @@ struct BuySellView: View {
     var disCountDict: [String: Double] = ["沒折扣":1, "95折":0.95, "9折":0.9, "85折":0.85, "8折":0.8, "75折":0.75, "7折":0.7, "65折":0.65, "6折":0.6, "55折":0.55, "5折":0.5, "45折":0.45, "4折":0.4, "35折":0.35, "3折":0.3, "28折":0.28, "25折":0.25, "2折":0.2, "15折":0.15, "1折":0.1, "0.5折":0.05, "免手續費":0]
     var disCounts = ["沒折扣", "95折", "9折", "85折", "8折", "75折", "7折", "65折", "6折", "55折", "5折", "45折", "4折", "35折", "3折", "28折", "25折", "2折", "15折", "1折", "0.5折", "免手續費"]
     
-    @State var commission: Int = 0
-    @State var stockTax: Int = 0
-    @State var buyPrice: Int = 0
-    @State var sellPrice: Int = 0
+    @State var commission = 0
+    @State var stockTax = 0
+    @State var buyPrice = 0
+    @State var sellPrice = 0
     
     func calculateFee() {
         guard price != "", volumn != "" else {
@@ -86,11 +86,13 @@ struct BuySellView: View {
                     TextField("請輸入成交價", text: $price)
                         .keyboardType(.decimalPad)
                         .foregroundColor(.blue)
+                    .modifier(ClearButton(text: $price))
                     
                     Text("請輸入購買股數(一張為1000股)")
                     TextField("請輸入股數", text: $volumn)
                         .keyboardType(.decimalPad)
                         .foregroundColor(.blue)
+                    .modifier(ClearButton(text: $volumn))
                     
                     Picker(selection: $selectedDiscountIndex, label: Text("選取券商手續費折扣")) {
                         ForEach(0 ..< disCounts.count) {
@@ -125,7 +127,26 @@ struct BuySellView: View {
                 }
             }
             .navigationBarTitle("買入&賣出金額試算")
-            .keyboardManagment()
+            .navigationBarItems(trailing:
+                Button(action: {
+                    self.price = ""
+                    self.volumn = ""
+                    self.commissionDiscount = ""
+                    self.selectedDiscountIndex = 0
+                    self.commission = 0
+                    self.stockTax = 0
+                    self.buyPrice = 0
+                    self.sellPrice = 0
+                    
+                    if self.showResultDetail {
+                        self.showResultDetail.toggle()
+                    }
+                }, label: {
+                    Text("清空")
+                    Image(systemName: "trash")
+                })
+            )
+                .keyboardManagment()
         }
     }
 }
@@ -146,14 +167,14 @@ struct ProfitLossView: View {
     var disCountDict: [String: Double] = ["沒折扣":1, "95折":0.95, "9折":0.9, "85折":0.85, "8折":0.8, "75折":0.75, "7折":0.7, "65折":0.65, "6折":0.6, "55折":0.55, "5折":0.5, "45折":0.45, "4折":0.4, "35折":0.35, "3折":0.3, "28折":0.28, "25折":0.25, "2折":0.2, "15折":0.15, "1折":0.1, "0.5折":0.05, "免手續費":0]
     var disCounts = ["沒折扣", "95折", "9折", "85折", "8折", "75折", "7折", "65折", "6折", "55折", "5折", "45折", "4折", "35折", "3折", "28折", "25折", "2折", "15折", "1折", "0.5折", "免手續費"]
     
-    @State var bCommission: Int = 0 //買入手續費
-    @State var bPriceTotal: Int = 0 //買入總付款
+    @State var bCommission = 0 //買入手續費
+    @State var bPriceTotal = 0 //買入總付款
     
-    @State var sCommission: Int = 0 //賣出手續費
-    @State var sPriceTotal: Int = 0 //賣出總收款
+    @State var sCommission = 0 //賣出手續費
+    @State var sPriceTotal = 0 //賣出總收款
     
-    @State var stockTax: Int = 0 //證所稅
-    @State var profitLoss: Int = 0 //獲利
+    @State var stockTax = 0 //證所稅
+    @State var profitLoss = 0 //獲利
     @State var profitLossMargin = "" //獲利率
     
     
@@ -223,11 +244,13 @@ struct ProfitLossView: View {
                         TextField("請輸入成交價", text: $bPrice)
                             .keyboardType(.decimalPad)
                             .foregroundColor(.blue)
+                        .modifier(ClearButton(text: $bPrice))
                         
                         Text("請輸入購買股數(一張為1000股)")
                         TextField("請輸入股數", text: $bVolumn)
                             .keyboardType(.decimalPad)
                             .foregroundColor(.blue)
+                        .modifier(ClearButton(text: $bVolumn))
                         
                         Picker(selection: $bIndex, label: Text("選取券商手續費折扣")) {
                             ForEach(0 ..< disCounts.count) {
@@ -237,6 +260,7 @@ struct ProfitLossView: View {
                         }.pickerStyle(DefaultPickerStyle())
                     }
                 }
+                
                 Section(header: Text("賣出試算")) {
                     Group {
                         //賣出資料
@@ -244,11 +268,13 @@ struct ProfitLossView: View {
                         TextField("請輸入成交價", text: $sPrice)
                             .keyboardType(.decimalPad)
                             .foregroundColor(.blue)
+                        .modifier(ClearButton(text: $sPrice))
                         
                         Text("請輸入購買股數(一張為1000股)")
                         TextField("請輸入股數", text: $sVolumn)
                             .keyboardType(.decimalPad)
                             .foregroundColor(.blue)
+                        .modifier(ClearButton(text: $sVolumn))
                         
                         Picker(selection: $sIndex, label: Text("選取券商手續費折扣")) {
                             ForEach(0 ..< disCounts.count) {
@@ -284,6 +310,30 @@ struct ProfitLossView: View {
                 }
             }
             .navigationBarTitle("買賣損益獲利率試算")
+                .navigationBarItems(trailing:
+                    Button(action: {
+                        self.bPrice = ""
+                        self.bVolumn = ""
+                        self.bCommissionDiscount = ""
+                        self.bIndex = 0
+                        self.bPriceTotal = 0 //買入總付款
+                        self.sPrice = ""
+                        self.sVolumn = ""
+                        self.sCommissionDiscount = ""
+                        self.sIndex = 0
+                        self.sPriceTotal = 0 //賣出總收款
+                        self.stockTax = 0 //證所稅
+                        self.profitLoss = 0 //獲利
+                        self.profitLossMargin = "" //獲利率
+                        
+                        if self.showResultDetail {
+                            self.showResultDetail.toggle()
+                        }
+                    }, label: {
+                        Text("清空")
+                        Image(systemName: "trash")
+                    })
+                )
             .keyboardManagment()
         }
     }
@@ -315,6 +365,24 @@ struct KeyboardManagment: ViewModifier {
                     }
             }
             .padding(.bottom, self.offset)
+        }
+    }
+}
+
+struct ClearButton: ViewModifier {
+    @Binding var text: String
+    func body(content: Content) -> some View {
+        ZStack(alignment: .trailing) {
+            content
+            if !text.isEmpty {
+                Button(action: {
+                    self.text = ""
+                }) {
+                    Image(systemName: "delete.left")
+                        .foregroundColor(Color(UIColor.opaqueSeparator))
+                }
+                .padding(.trailing, 8)
+            }
         }
     }
 }
