@@ -86,13 +86,13 @@ struct BuySellView: View {
                     TextField("請輸入成交價", text: $price)
                         .keyboardType(.decimalPad)
                         .foregroundColor(.blue)
-                    .modifier(ClearButton(text: $price))
+                        .modifier(ClearButton(text: $price))
                     
                     Text("請輸入購買股數(一張為1000股)")
                     TextField("請輸入股數", text: $volumn)
                         .keyboardType(.decimalPad)
                         .foregroundColor(.blue)
-                    .modifier(ClearButton(text: $volumn))
+                        .modifier(ClearButton(text: $volumn))
                     
                     Picker(selection: $selectedDiscountIndex, label: Text("選取券商手續費折扣")) {
                         ForEach(0 ..< disCounts.count) {
@@ -128,25 +128,25 @@ struct BuySellView: View {
             }
             .navigationBarTitle("買入&賣出金額試算")
             .navigationBarItems(trailing:
-                Button(action: {
-                    self.price = ""
-                    self.volumn = ""
-                    self.commissionDiscount = ""
-                    self.selectedDiscountIndex = 0
-                    self.commission = 0
-                    self.stockTax = 0
-                    self.buyPrice = 0
-                    self.sellPrice = 0
-                    
-                    if self.showResultDetail {
-                        self.showResultDetail.toggle()
-                    }
-                }, label: {
-                    Text("清空")
-                    Image(systemName: "trash")
-                })
+                                    Button(action: {
+                                        self.price = ""
+                                        self.volumn = ""
+                                        self.commissionDiscount = ""
+                                        self.selectedDiscountIndex = 0
+                                        self.commission = 0
+                                        self.stockTax = 0
+                                        self.buyPrice = 0
+                                        self.sellPrice = 0
+                                        
+                                        if self.showResultDetail {
+                                            self.showResultDetail.toggle()
+                                        }
+                                    }, label: {
+                                        Text("清空")
+                                        Image(systemName: "trash")
+                                    })
             )
-                .keyboardManagment()
+            .keyboardManagment()
         }
     }
 }
