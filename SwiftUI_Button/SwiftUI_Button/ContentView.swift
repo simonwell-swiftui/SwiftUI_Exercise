@@ -30,20 +30,22 @@ struct ContentView: View {
 //                    .font(.title)
 //            }
             
+            //button-1
             Button(action: {
-                print("CCC Tapped!")
+                print("button-1 Tapped!")
             }) {
-                Text("CCC")
+                Text("button-1")
                     .foregroundColor(.purple)
                     .font(.title)
                     .padding()
                     .border(Color.purple, width: 5)
             }
             
+            //button-2
             Button(action: {
-                print("DDD Tapped!")
+                print("button-2 Tapped!")
             }) {
-                Text("DDD")
+                Text("button-2")
                     .fontWeight(.bold)
                     .font(.title)
                     .padding()
@@ -53,10 +55,11 @@ struct ContentView: View {
                     .border(Color.purple, width: 5)
             }
             
+            //button-3
             Button(action: {
-                print("EEE Tapped!")
+                print("button-3 Tapped!")
             }) {
-                Text("EEE")
+                Text("button-3")
                     .fontWeight(.bold)
                     .font(.title)
                     .padding()
@@ -67,12 +70,12 @@ struct ContentView: View {
                     .overlay(
                         RoundedRectangle(cornerRadius: 40)
                             .stroke(Color.purple, lineWidth: 5)
-                )
-                
+                    )
             }
             
+            //trash
             Button(action: {
-                print("FFF Tapped!")
+                print("trash Tapped!")
             }) {
                 Image(systemName: "trash")
                     .font(.largeTitle)
@@ -80,22 +83,22 @@ struct ContentView: View {
                 
             }
             
+            //plus
             Button(action: {
-                print("GGG Tapped!")
-                   
+                print("plus Tapped!")
+                
             }) {
                 Image(systemName: "plus")
-                .padding()
-                .background(Color.blue)
-                .clipShape(Circle())
-                .font(.largeTitle)
-                .foregroundColor(Color.white)
-                
-                
+                    .padding()
+                    .background(Color.blue)
+                    .clipShape(Circle())
+                    .font(.largeTitle)
+                    .foregroundColor(Color.white)
             }
             
+            //trash icon + delete text
             Button(action: {
-                print("HHH Tapped!")
+                print("trash icon + delete text Tapped!")
             }) {
                 HStack {
                     Image(systemName: "trash")
@@ -110,6 +113,7 @@ struct ContentView: View {
             .background(Color.red)
             .cornerRadius(40)
             
+            // gradient trash icon + delete text
             Button(action: {
                 print("III Tapped!")
             }) {
@@ -126,6 +130,7 @@ struct ContentView: View {
             .background(LinearGradient(gradient: Gradient(colors: [Color("DarkGreen"), Color("LightGreen")]), startPoint: .leading, endPoint: .trailing))
             .cornerRadius(40)
             
+            // gradient share icon + share text
             Button(action: {
                 print("Share tapped!")
             }) {
@@ -139,6 +144,7 @@ struct ContentView: View {
             }
             .buttonStyle(GradientBackgroundStyle())
 
+            // gradient edit icon + edit text
             Button(action: {
                 print("Edit tapped!")
             }) {
@@ -151,7 +157,8 @@ struct ContentView: View {
                 }
             }
             .buttonStyle(GradientBackgroundStyle())
-
+            
+            // gradient delete icon + delete text
             Button(action: {
                 print("Delete tapped!")
             }) {
